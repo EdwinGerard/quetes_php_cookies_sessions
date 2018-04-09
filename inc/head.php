@@ -1,3 +1,9 @@
+<?php
+if (!empty($_POST['loginname'])){
+    $_SESSION['loginname'] = $_POST['loginname'];
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,10 +39,26 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Chocolates chips</a></li>
-          <li><a href="#">Nuts</a></li>
-          <li><a href="#">Gluten full</a></li>
-          <li>
+            <?php
+                if (empty($_SESSION['loginname'])) {
+                    ?>
+                    <li><a href="/login.php">Sign In</a></li>
+                    <?php
+                }
+            ?>
+            <?php
+                if (!empty($_SESSION['loginname'])) {
+                    ?>
+                    <li>
+                        <form action="/" method="post"><input class="btn btn-primary" type="submit" name="loggout" value="Deconnexion" style="margin-top: 15px;"></form>
+                    </li>
+                    <?php
+                }
+            ?>
+            <li><a href="#">Chocolates chips</a></li>
+            <li><a href="#">Nuts</a></li>
+            <li><a href="#">Gluten full</a></li>
+            <li>
             <a href="/cart.php" class="btn btn-warning navbar-btn">
               <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
               Cart
@@ -47,6 +69,6 @@
     </div><!-- /.container-fluid -->
   </nav>
   <div class="container-fluid text-right">
-    <strong>Hello Wilder !</strong>
+    <strong>Hello <?php if (!empty($_SESSION['loginname'])) { echo $_SESSION['loginname'];}else{ echo 'Wilder!';}; ?> !</strong>
   </div>
 </header>
